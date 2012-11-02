@@ -15,6 +15,6 @@ struct arguments
 
 };
 
-int arg_treatment(int *argc,char ***argv,struct arguments *args);
+int arg_treatment(int *argc,char **argv,struct arguments *args);
 
 #endif /* ARG_TREATMENT_H_ */

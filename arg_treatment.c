@@ -7,11 +7,12 @@
 
 //include always lib before header
 #include <stdio.h>
+#include <stdlib.h>
 
 //def
 #include "arg_treatment.h"
 
-int arg_treatment(int *argc,char ***argv,struct arguments *args){
+int arg_treatment(int *argc,char **argv,struct arguments *args){
 	//treatment of argv check number
 	//return std error status
 
@@ -19,7 +20,7 @@ int arg_treatment(int *argc,char ***argv,struct arguments *args){
 
 	if(*argc<3){
 		printf("Afficher le help de grep\n");
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	if(*argc > 3){
@@ -32,8 +33,8 @@ int arg_treatment(int *argc,char ***argv,struct arguments *args){
 		pos_file = 2;
 	}
 
-	args->pattern = *argv[pos_pattern];
-	args->file_path = *argv[pos_file];
+	args->pattern = argv[pos_pattern];
+	args->file_path = argv[pos_file];
 
-	return 0;
+	return EXIT_SUCCESS;
 }
