@@ -8,6 +8,13 @@
 #ifndef ARG_TREATMENT_H_
 #define ARG_TREATMENT_H_
 
-int arg_treatment(int* argc,char*** argv);
+struct arguments
+{
+   char *pattern;
+   char *file_path;
+
+};
+
+int arg_treatment(int *argc,char ***argv,struct arguments *args);
 
 #endif /* ARG_TREATMENT_H_ */
