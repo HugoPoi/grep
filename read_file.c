@@ -29,23 +29,42 @@ int open_file(char *file_path,FILE ** file){
 int get_line_file(FILE ** file,char * line,size_t * size){
 
 	//alloc mem for line
-	/*
-	line = calloc (*size,sizeof (char) );
+	if(line == NULL){
+		line = calloc (*size,sizeof (char) );
+	}
 	if(line == NULL){
 	fprintf(stderr,"Impossible de créer cette merde en RAM\n");
 	exit(EXIT_FAILURE);
 	}
-	*/
-
-	//TODO implementer ligne plus grande que size et size auto
 		if(fgets(line,*size,*file)==NULL){
 			fclose(*file);
 			return 1;
 		}
 		else{
 			//verify all the line is read
-			return 0;
+			//debug
+			printf("line:%s##",line);
+			char *endline = strchr(line, '\n');
+
+			      if (endline != NULL)
+			      {
+			         /* remove \n */
+			         *endline = 0;
+			      }
+			      else
+			      {
+
+			         /* sinon, on lit tous les caracteres restants */
+			    	  if(!feof(*file)){
+			    	  printf("OverFlow:%s\n",line);
+			    	  return 1;
+			    	  }
+
+			      }
 		}
+
+		//debug
+		printf("readok:%s\n",line);
 
 	return 0;
 }
