@@ -25,17 +25,15 @@ int main(int argc, char **argv) {
 	//init tampon for lines
 	//TODO dynamic size line for read a line go to read_file.c, just use a pointer
 	size_t defaultsize = 50;
-	char * myline;//[defaultsize];
+	char * myline=NULL;//[defaultsize];
 
-	while(!get_line_file(&myfile,myline,&defaultsize)){
+	while(!get_line_file(&myfile,&myline,&defaultsize)){
 		if(search_simple_regex(myline,args.pattern)){
-			//TODO add a \n after ends line.
 			printf("%s\n",myline);
 		}
 	}
 
 	free(myline);
 	myline = NULL;
-
 	return EXIT_SUCCESS;
 }
