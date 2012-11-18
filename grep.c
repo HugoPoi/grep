@@ -18,16 +18,15 @@ int main(int argc, char **argv) {
 	arg_treatment(&argc,argv,&args);
 
 	//init pointer for open file
-	FILE * myfile=NULL;
+	FILE *myfile=open_file(args.file_path);
 
-	open_file(args.file_path,&myfile);
 
 	//init tampon for lines
 	//TODO dynamic size line for read a line go to read_file.c, just use a pointer
 	size_t defaultsize = 50;
-	char * myline=NULL;//[defaultsize];
+	char *myline=NULL;//[defaultsize];
 
-	while(!get_line_file(&myfile,&myline,&defaultsize)){
+	while(!get_line_file(myfile,myline,&defaultsize)){
 		if(search_simple_regex(myline,args.pattern)){
 			printf("%s\n",myline);
 		}

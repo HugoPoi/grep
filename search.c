@@ -11,7 +11,7 @@
 
 #include "search.h"
 
-int search_simple_regex(char * line,char * pattern){
+int search_simple_regex(char *line,char *pattern){
 
 	if(strstr(line,pattern)==NULL){
 		return 0;

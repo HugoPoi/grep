@@ -8,6 +8,6 @@
 #ifndef SEARCH_H_
 #define SEARCH_H_
 
-int search_simple_regex(char * line,char * pattern);
+int search_simple_regex(char *line,char *pattern);
 
 #endif /* SEARCH_H_ */
