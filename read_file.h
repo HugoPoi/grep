@@ -8,6 +8,10 @@
 #ifndef READ_FILE_H_
 #define READ_FILE_H_
 
+/**
+ * Open file with file path given
+ * Return File Struct else generate an error
+ */
 FILE *open_file(char * file_path);
 
 /**

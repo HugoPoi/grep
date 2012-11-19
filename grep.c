@@ -21,10 +21,10 @@ int main(int argc, char **argv) {
 	FILE *myfile=open_file(args.file_path);
 
 
-	//init tampon for lines
-	//TODO dynamic size line for read a line go to read_file.c, just use a pointer
+	//default size for one line (debug value:50 , prod value: 1000)
 	size_t defaultsize = 50;
-	char *myline=NULL;//[defaultsize];
+	//init pointer for line buffer
+	char *myline=NULL;
 
 	while(!get_line_file(myfile,&myline,&defaultsize)){
 		if(search_simple_regex(myline,args.pattern)){

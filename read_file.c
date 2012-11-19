@@ -41,8 +41,6 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 		return 1;
 	} else {
 		//verify all the line is read
-		//debug
-		//printf("line:%s##",*line);
 		char *endline = strchr(*line, '\n');
 
 		if (endline != NULL ) {
@@ -50,32 +48,26 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 			*endline = '\0';
 		} else {
 
-			/* sinon, on lit tous les caracteres restants */
+			/* else, read the all line */
 			if (!feof(file)) {
 				char c;
-				size_t maxsize=*size;//(50)
-				size_t currentsize=*size;//(50)
+				size_t maxsize=*size;
+				size_t currentsize=*size;
 				while ((c = fgetc(file)) != '\n' && c != EOF) {
-					currentsize++;//(51)
+					currentsize++;
+					/* if overflow realloc x2 the buffer line*/
 					if(currentsize>maxsize-1){
-						maxsize = maxsize*2;//(100)
+						maxsize = maxsize*2;
 						*line = realloc(*line,maxsize * sizeof(char));
 					}
-					//printf("%c,%d,%d\n",c,currentsize-2,maxsize);
-					//printf("%c\n",*(*line+currentsize-2));
 					*(*line+currentsize-2)=c;
 				}
 				*(*line+currentsize-1)='\0';
 				*size = maxsize;
-				//Debug
-				//printf("OverFlow:%s\n", *line);
 			}
 
 		}
 	}
-
-	//debug
-	//printf("readok:%s\n",*line);
 
 	return 0;
 }
