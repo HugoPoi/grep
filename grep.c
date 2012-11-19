@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 	size_t defaultsize = 50;
 	char *myline=NULL;//[defaultsize];
 
-	while(!get_line_file(myfile,myline,&defaultsize)){
+	while(!get_line_file(myfile,&myline,&defaultsize)){
 		if(search_simple_regex(myline,args.pattern)){
 			printf("%s\n",myline);
 		}
