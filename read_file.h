@@ -16,7 +16,7 @@ FILE *open_file(char * file_path);
 
 /**
  * Get the next line in the file
- * Return 0 when line is OK else 1
+ * Return 0 when line is OK else 1 for error or EOF
  */
 int get_line_file(FILE * file,char **line,size_t * size);
 
