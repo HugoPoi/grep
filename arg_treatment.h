@@ -70,5 +70,6 @@ struct arguments
 
 int arg_init(struct arguments *args);
 int arg_treatment(int *argc,char **argv,struct arguments *args);
+void arguments_delete(struct arguments *args);
 
 #endif /* ARG_TREATMENT_H_ */

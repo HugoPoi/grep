@@ -27,13 +27,21 @@ int main(int argc, char **argv) {
 	//init pointer for line buffer
 	char *currentline=NULL;
 
+	//execute options routine
+
+	if(args.opt_i == 1){
+		str_to_lower(args.pattern);
+	}
+
+
 	while(!get_line_file(currentfile,&currentline,&defaultsize)){
-		if(search_simple_regex(currentline,args.pattern)){
+		if(search_simple_regex(currentline,args.pattern,&args)){
 			printf("%s\n",currentline);
 		}
 	}
 
 	free(currentline);
 	currentline = NULL;
+	arguments_delete(&args);
 	return EXIT_SUCCESS;
 }

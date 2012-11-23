@@ -106,17 +106,24 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 			option_match = 1;
 		}
 
-
-		//if you want add a option insert the code here
-
-
-		//if doesn't match any option, the first will be pattern and the second the file
-		if(option_match==0 && args->pattern==NULL){
-			args->pattern = argv[i];
+		//option -i --ignore-case
+		if (strcmp(argv[i], "--ignore-case") == 0
+				|| strcmp(argv[i], "-i") == 0) {
+			args->opt_i = 1;
 			option_match = 1;
 		}
-		if(option_match==0 && args->pattern!=NULL && args->file_path==NULL){
-			args->file_path = argv[i];
+
+		//if you want add a option insert the code here (before this line :-)
+
+		//if doesn't match any option, the first will be pattern and the second the file
+		if (option_match == 0 && args->pattern == NULL ) {
+			args->pattern = calloc(strlen(argv[i])+1,sizeof(char));
+			strcpy(args->pattern,argv[i]);
+			option_match = 1;
+		}
+		if (option_match == 0&& args->pattern!=NULL && args->file_path==NULL) {
+			args->file_path = calloc(strlen(argv[i])+1,sizeof(char));
+			strcpy(args->file_path,argv[i]);
 			option_match = 1;
 		}
 
@@ -129,4 +136,15 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 	}
 
 	return EXIT_SUCCESS;
+}
+
+void arguments_delete(struct arguments *args) {
+	if (args->pattern != NULL ) {
+		free(args->pattern);
+		args->pattern = NULL;
+	}
+	if (args->file_path != NULL ) {
+		free(args->file_path);
+		args->file_path = NULL;
+	}
 }
