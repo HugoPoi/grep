@@ -15,24 +15,25 @@ int main(int argc, char **argv) {
 
 	//treatment of argv check number
 	struct arguments args;
+	arg_init(&args);
 	arg_treatment(&argc,argv,&args);
 
 	//init pointer for open file
-	FILE *myfile=open_file(args.file_path);
+	FILE *currentfile=open_file(args.file_path);
 
 
 	//default size for one line (debug value:50 , prod value: 1000)
 	size_t defaultsize = 50;
 	//init pointer for line buffer
-	char *myline=NULL;
+	char *currentline=NULL;
 
-	while(!get_line_file(myfile,&myline,&defaultsize)){
-		if(search_simple_regex(myline,args.pattern)){
-			printf("%s\n",myline);
+	while(!get_line_file(currentfile,&currentline,&defaultsize)){
+		if(search_simple_regex(currentline,args.pattern)){
+			printf("%s\n",currentline);
 		}
 	}
 
-	free(myline);
-	myline = NULL;
+	free(currentline);
+	currentline = NULL;
 	return EXIT_SUCCESS;
 }

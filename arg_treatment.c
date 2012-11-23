@@ -8,26 +8,81 @@
 //include always lib before header
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //def
 #include "arg_treatment.h"
 
-int arg_treatment(int *argc,char **argv,struct arguments *args){
+int arg_init(struct arguments *args) {
+
+	args->opt_E = 0;
+	args->opt_F = 0;
+	args->opt_G = 0;
+	args->opt_P = 0;
+	args->opt_e = 0;
+	args->opt_f = 0;
+	args->opt_i = 0;
+	args->opt_w = 0;
+	args->opt_x = 0;
+	args->opt_z = 0;
+	args->opt_s = 0;
+	args->opt_v = 0;
+	args->opt_V = 0;
+	args->opt_help = 0;
+
+	args->opt_m = 0;
+	args->opt_b = 0;
+	args->opt_n = 0;
+	args->opt_H = 0;
+	args->opt_h = 0;
+	args->opt_o = 0;
+	args->opt_q = 0;
+	args->opt_a = 0;
+	args->opt_I = 0;
+	args->opt_d = 0;
+	args->opt_D = 0;
+	args->opt_R = 0;
+	args->opt_L = 0;
+	args->opt_l = 0;
+	args->opt_c = 0;
+	args->opt_T = 0;
+	args->opt_Z = 0;
+
+	args->opt_B = 0;
+	args->opt_A = 0;
+	args->opt_C = 0;
+	args->opt_U = 0;
+	args->opt_u = 0;
+
+	return 1;
+}
+
+int arg_treatment(int *argc, char **argv, struct arguments *args) {
 	//treatment of argv check number
 	//return std error status
 
-	int pos_pattern,pos_file;
+	int pos_pattern, pos_file,i=0;
 
-	if(*argc<3){
-		printf("Afficher le help de grep\n");
-		exit(EXIT_FAILURE);
+	for (i = 1; i < *argc; i++) {
+
+		//detect the option --help
+		if (strcmp(argv[i], "--help") == 0) {
+			fprintf(stdout,"help of grep\n");
+			exit(2);
+		}
+		if(strcmp(argv[i],"--version")==0) {
+			fprintf(stdout,"version of grep\n");
+			exit(2);
+		}
+
 	}
 
-	if(*argc > 3){
-		//check options
+	if(*argc < 3){
+		fprintf(stdout,"help of grep\n");
+		exit(2);
 	}
 
-	if(*argc == 3){
+	if (*argc == 3) {
 		//if 3 args define pos
 		pos_pattern = 1;
 		pos_file = 2;
