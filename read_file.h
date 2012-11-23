@@ -20,4 +20,6 @@ FILE *open_file(char * file_path);
  */
 int get_line_file(FILE * file,char **line,size_t * size);
 
+char *get_all_file(char *file_path);
+
 #endif /* READ_FILE_H_ */

@@ -51,18 +51,18 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 			/* else, read the all line */
 			if (!feof(file)) {
 				char c;
-				size_t maxsize=*size;
-				size_t currentsize=*size;
+				size_t maxsize = *size;
+				size_t currentsize = *size;
 				while ((c = fgetc(file)) != '\n' && c != EOF) {
 					currentsize++;
 					/* if overflow realloc x2 the buffer line*/
-					if(currentsize>maxsize-1){
-						maxsize = maxsize*2;
-						*line = realloc(*line,maxsize * sizeof(char));
+					if (currentsize > maxsize - 1) {
+						maxsize = maxsize * 2;
+						*line = realloc(*line, maxsize * sizeof(char));
 					}
-					*(*line+currentsize-2)=c;
+					*(*line + currentsize - 2) = c;
 				}
-				*(*line+currentsize-1)='\0';
+				*(*line + currentsize - 1) = '\0';
 				*size = maxsize;
 			}
 
@@ -71,3 +71,27 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 
 	return 0;
 }
+
+char *get_all_file(char *file_path) {
+
+	FILE *file = open_file(file_path);
+	size_t size = 50;
+	char c;
+	char *line = calloc(size, sizeof(char));;
+	size_t maxsize = size;
+	size_t currentsize = 0;
+	while ((c = fgetc(file)) != EOF) {
+		currentsize++;
+		/* if overflow realloc x2 the buffer line*/
+		if (currentsize > maxsize - 1) {
+			maxsize = maxsize * 2;
+			line = realloc(line, maxsize * sizeof(char));
+		}
+		line[currentsize - 1] = c;
+	}
+	line[currentsize] = '\0';
+	size = maxsize;
+	fclose(file);
+	return line;
+}
+

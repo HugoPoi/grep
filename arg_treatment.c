@@ -10,10 +10,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "read_file.h"
+
 //def
 #include "arg_treatment.h"
 
 int arg_init(struct arguments *args) {
+
+	args->pattern = NULL;
+	args->file_path = NULL;
 
 	args->opt_E = 0;
 	args->opt_F = 0;
@@ -61,14 +66,20 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 	//treatment of argv check number
 	//return std error status
 
-	int pos_pattern, pos_file, i = 0;
+	int i;
+
+	short option_match;
 
 	for (i = 1; i < *argc; i++) {
+
+		//init option match
+		option_match = 0;
 
 		//option --help
 		if (strcmp(argv[i], "--help") == 0) {
 			args->opt_help = 1;
 			fprintf(stdout,"help of grep\n");
+			option_match = 1;
 			exit(2);
 		}
 
@@ -76,6 +87,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-V") == 0) {
 			args->opt_V = 1;
 			fprintf(stdout,"version of grep\n");
+			option_match = 1;
 			exit(2);
 		}
 
@@ -83,28 +95,38 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		if (strncmp(argv[i], "-f=", 3) == 0) {
 			args->opt_f = 1;
 			args->opt_f_file = &argv[i][3];
+			args->pattern = get_all_file(args->opt_f_file);
+			option_match = 1;
 		}
 		//option --file=
 		if (strncmp(argv[i], "--file=", 7) == 0) {
 			args->opt_f = 1;
 			args->opt_f_file = &argv[i][7];
+			args->pattern = get_all_file(args->opt_f_file);
+			option_match = 1;
+		}
+
+
+		//if you want add a option insert the code here
+
+
+		//if doesn't match any option, the first will be pattern and the second the file
+		if(option_match==0 && args->pattern==NULL){
+			args->pattern = argv[i];
+			option_match = 1;
+		}
+		if(option_match==0 && args->pattern!=NULL && args->file_path==NULL){
+			args->file_path = argv[i];
+			option_match = 1;
 		}
 
 	}
 
+	//if only 1 args and it's not -V or help -> exit
 	if (*argc < 3) {
 		fprintf(stdout,"help of grep\n");
 		exit(2);
 	}
-
-	if (*argc == 3) {
-		//if 3 args define pos
-		pos_pattern = 1;
-		pos_file = 2;
-	}
-
-	args->pattern = argv[pos_pattern];
-	args->file_path = argv[pos_file];
 
 	return EXIT_SUCCESS;
 }
