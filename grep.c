@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 			if (args.opt_b) {
 				snprintf(printout_b, 100, "%lu:", byte_offset);
 			}
-			printf("%s%s%s\n", printout_n, printout_b, currentline);
+			printf("%s%s%s%s%s\n",(args.opt_H)? args.file_path: "",(args.opt_H)?":":"", printout_n, printout_b, currentline);
 		}
 
 		if (args.opt_m && match_count >= args.opt_m_count)
