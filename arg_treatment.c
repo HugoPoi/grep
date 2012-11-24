@@ -92,9 +92,10 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		}
 
 		//option -f=
-		if (strncmp(argv[i], "-f=", 3) == 0) {
+		if (strcmp(argv[i], "-f") == 0) {
 			args->opt_f = 1;
-			args->opt_f_file = &argv[i][3];
+			args->opt_f_file = argv[i+1];
+			i++;
 			args->pattern = get_all_file(args->opt_f_file);
 			option_match = 1;
 		}
@@ -124,7 +125,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		if (strcmp(argv[i], "--no-message") == 0
 								|| strcmp(argv[i], "-s") == 0) {
 							args->opt_s = 1;
-							freopen("NUL","w",stderr);
+							freopen(NULLSYSFILE,"w",stderr);
 							option_match = 1;
 						}
 

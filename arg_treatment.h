@@ -8,6 +8,23 @@
 #ifndef ARG_TREATMENT_H_
 #define ARG_TREATMENT_H_
 
+
+#ifdef TARGET_OS_MAC
+  // Mac Mod Here
+#define NULLSYSFILE "/dev/null"
+#endif
+
+#ifdef __linux__
+  // Linux Mod Here
+#define NULLSYSFILE "/dev/null"
+#endif
+
+#ifdef _WIN32// || _WIN64
+  // Windows Mod Here
+#define NULLSYSFILE "NUL"
+#endif
+
+
 struct arguments
 {
    char *pattern;
