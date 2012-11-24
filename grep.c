@@ -36,12 +36,11 @@ int main(int argc, char **argv) {
 	//start the main loop
 	int read_error_line;
 	unsigned int match_count = 0, line_count = 0;
-	char printout_n[200] = "";
+	long byte_offset=0;
+	char printout_n[100] = "";
 	char printout_b[100] = "";
 
-	if (args.opt_b) {
-		snprintf(printout_b, 100, "%lu:", ftell(currentfile));
-	}
+	if (args.opt_b) byte_offset = ftell(currentfile);
 	read_error_line =
 			(!args.opt_z) ?
 					get_line_file(currentfile, &currentline, &defaultsize) :
@@ -54,14 +53,15 @@ int main(int argc, char **argv) {
 			if (args.opt_n) {
 				snprintf(printout_n, 100, "%u:", line_count);
 			}
-			printf("%s%s\n", strcat(printout_n, printout_b), currentline);
+			if (args.opt_b) {
+				snprintf(printout_b, 100, "%lu:", byte_offset);
+			}
+			printf("%s%s%s\n", printout_n, printout_b, currentline);
 		}
 
 		if (args.opt_m && match_count >= args.opt_m_count)
 			break;
-		if (args.opt_b) {
-			snprintf(printout_b, 100, "%lu:", ftell(currentfile));
-		}
+		if (args.opt_b) byte_offset = ftell(currentfile);
 		read_error_line =
 				(!args.opt_z) ?
 						get_line_file(currentfile, &currentline, &defaultsize) :
