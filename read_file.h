@@ -19,6 +19,11 @@ FILE *open_file(char * file_path);
  * Return 0 when line is OK else 1 for error or EOF
  */
 int get_line_file(FILE * file,char **line,size_t * size);
+/**
+ * Get the next line in the file -z null-data
+ * Return 0 when line is OK else 1 for error or EOF
+ */
+int get_line_file_nd(FILE * file,char **line,size_t * size);
 
 char *get_all_file(char *file_path);
 

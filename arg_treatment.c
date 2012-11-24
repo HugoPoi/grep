@@ -113,6 +113,21 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 			option_match = 1;
 		}
 
+		//option -z \0 replace \n
+		if (strcmp(argv[i], "--null-data") == 0
+						|| strcmp(argv[i], "-z") == 0) {
+					args->opt_z = 1;
+					option_match = 1;
+				}
+
+		//option -s no error message
+		if (strcmp(argv[i], "--no-message") == 0
+								|| strcmp(argv[i], "-s") == 0) {
+							args->opt_s = 1;
+							freopen("NUL","w",stderr);
+							option_match = 1;
+						}
+
 		//if you want add a option insert the code here (before this line :-)
 
 		//if doesn't match any option, the first will be pattern and the second the file
@@ -131,7 +146,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 
 	//if only 1 args and it's not -V or help -> exit
 	if (*argc < 3) {
-		fprintf(stdout,"help of grep\n");
+		fprintf(stderr,"help of grep\n");
 		exit(2);
 	}
 
