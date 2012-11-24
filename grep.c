@@ -35,14 +35,21 @@ int main(int argc, char **argv) {
 
 	//start the main loop
 	int read_error_line;
+	unsigned int match_count=0;
 	read_error_line =
 			(!args.opt_z) ?
 					get_line_file(currentfile, &currentline, &defaultsize) :
 					get_line_file_nd(currentfile, &currentline, &defaultsize);
 	while (!read_error_line) {
 		if (search_simple_regex(currentline, args.pattern, &args)) {
-			printf("%s\n", currentline);
+			match_count++;
+			if(args.opt_b){
+				printf("%lu:%s\n",ftell(currentfile),currentline);
+			}
+			else printf("%s\n", currentline);
 		}
+
+		if(args.opt_m && match_count>=args.opt_m_count) break;
 
 		read_error_line =
 				(!args.opt_z) ?

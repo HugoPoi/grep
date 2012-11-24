@@ -49,6 +49,7 @@ struct arguments
    short opt_help; //afficher l'aide et quitter
 
    short opt_m;//--max-count=NUM stop after NUM matches
+   unsigned int opt_m_count;
    short opt_b;//--byte-offset print the byte offset with output lines
    short opt_n;//--line-number print line number with output lines
    //--line-buffered flush output on every line

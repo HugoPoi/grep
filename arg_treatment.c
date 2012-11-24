@@ -36,6 +36,7 @@ int arg_init(struct arguments *args) {
 	args->opt_help = 0;
 
 	args->opt_m = 0;
+	args->opt_m_count = 0;
 	args->opt_b = 0;
 	args->opt_n = 0;
 	args->opt_H = 0;
@@ -86,7 +87,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		//option --version
 		if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-V") == 0) {
 			args->opt_V = 1;
-			fprintf(stdout,"version of grep\n");
+			fprintf(stdout,"Build on %s %s\n",__DATE__,__TIME__);
 			option_match = 1;
 			exit(2);
 		}
@@ -94,7 +95,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		//option -f=
 		if (strcmp(argv[i], "-f") == 0) {
 			args->opt_f = 1;
-			args->opt_f_file = argv[i+1];
+			args->opt_f_file = argv[i + 1];
 			i++;
 			args->pattern = get_all_file(args->opt_f_file);
 			option_match = 1;
@@ -115,31 +116,57 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		}
 
 		//option -z \0 replace \n
-		if (strcmp(argv[i], "--null-data") == 0
-						|| strcmp(argv[i], "-z") == 0) {
-					args->opt_z = 1;
-					option_match = 1;
-				}
+		if (strcmp(argv[i], "--null-data") == 0 || strcmp(argv[i], "-z") == 0) {
+			args->opt_z = 1;
+			option_match = 1;
+		}
 
 		//option -s no error message
 		if (strcmp(argv[i], "--no-message") == 0
-								|| strcmp(argv[i], "-s") == 0) {
-							args->opt_s = 1;
-							freopen(NULLSYSFILE,"w",stderr);
-							option_match = 1;
-						}
+				|| strcmp(argv[i], "-s") == 0) {
+			args->opt_s = 1;
+			freopen(NULLSYSFILE, "w", stderr);
+			option_match = 1;
+		}
+
+		//option -m max count
+		if (strcmp(argv[i], "-m") == 0) {
+			args->opt_m = 1;
+			if (!sscanf(argv[i + 1], "%u", &args->opt_m_count)) {
+				fprintf(stderr,"erreur -m \n");
+				exit(2);
+			}
+			i++;
+			option_match = 1;
+		}
+		//option --max-count=
+		if (strncmp(argv[i], "--max-count=", 12) == 0) {
+			args->opt_m = 1;
+			if (!sscanf(&argv[i][12], "%u", &args->opt_m_count)) {
+				fprintf(stderr,"erreur -m ");
+				exit(2);
+			}
+			option_match = 1;
+		}
+
+		//option -b print byte offset
+		if (strcmp(argv[i], "--byte-offset") == 0
+				|| strcmp(argv[i], "-b") == 0) {
+			args->opt_b = 1;
+			option_match = 1;
+		}
 
 		//if you want add a option insert the code here (before this line :-)
 
 		//if doesn't match any option, the first will be pattern and the second the file
 		if (option_match == 0 && args->pattern == NULL ) {
-			args->pattern = calloc(strlen(argv[i])+1,sizeof(char));
-			strcpy(args->pattern,argv[i]);
+			args->pattern = calloc(strlen(argv[i]) + 1, sizeof(char));
+			strcpy(args->pattern, argv[i]);
 			option_match = 1;
 		}
 		if (option_match == 0&& args->pattern!=NULL && args->file_path==NULL) {
-			args->file_path = calloc(strlen(argv[i])+1,sizeof(char));
-			strcpy(args->file_path,argv[i]);
+			args->file_path = calloc(strlen(argv[i]) + 1, sizeof(char));
+			strcpy(args->file_path, argv[i]);
 			option_match = 1;
 		}
 
