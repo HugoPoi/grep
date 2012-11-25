@@ -165,9 +165,17 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 
 		//option -H print the filename
 		if (strcmp(argv[i], "--with-filename") == 0
-						|| strcmp(argv[i], "-H") == 0) {
-					args->opt_H = 1;
-					option_match = 1;
+				|| strcmp(argv[i], "-H") == 0) {
+			args->opt_H = 1;
+			option_match = 1;
+		}
+
+		if (strcmp(argv[i], "--quiet") == 0 || strcmp(argv[i], "-q") == 0
+				|| strcmp(argv[i], "--silent") == 0) {
+
+			args->opt_q = 1;
+			freopen(NULLSYSFILE, "w", stdout);
+			option_match = 1;
 		}
 
 		//if you want add a option insert the code here (before this line :-)
