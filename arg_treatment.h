@@ -9,7 +9,7 @@
 #define ARG_TREATMENT_H_
 
 
-#ifdef TARGET_OS_MAC
+#ifdef __APPLE__
   // Mac Mod Here
 #define NULLSYSFILE "/dev/null"
 #endif
