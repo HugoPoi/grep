@@ -62,6 +62,7 @@ struct arguments
    short opt_a;//--text équivaut à --binary-files=text
    short opt_I;//équivaut à --binary-files=without-match
    short opt_d;//--directories=ACTION indique comment traiter les répertoires; ACTION vaut : `read' ou `recurse', ou `skip'
+   unsigned int opt_d_action;//1 for read, 2 for recurse, 3 for skip
    short opt_D;//--devices=ACTION indique comment traiter les périphériques,les FIFOS, les sockets; ACTION vaut `read' ou `skip'
    short opt_R;//-r, --recursive équivaut à --directories=recurse
    //--include=MOTIF_FIC cherche dans les fichiers concordants avec MOTIF_FIC

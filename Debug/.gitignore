@@ -1,0 +1,10 @@
+/run_through_dir.o
+/arg_treatment.o
+/grep.o
+/read_file.o
+/search.o
+/arg_treatment.d
+/grep.d
+/read_file.d
+/run_through_dir.d
+/search.d

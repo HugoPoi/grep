@@ -7,18 +7,21 @@ C_SRCS += \
 ../arg_treatment.c \
 ../grep.c \
 ../read_file.c \
+../run_through_dir.c \
 ../search.c 
 
 OBJS += \
 ./arg_treatment.o \
 ./grep.o \
 ./read_file.o \
+./run_through_dir.o \
 ./search.o 
 
 C_DEPS += \
 ./arg_treatment.d \
 ./grep.d \
 ./read_file.d \
+./run_through_dir.d \
 ./search.d 
 
 
