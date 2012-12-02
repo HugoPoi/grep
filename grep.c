@@ -11,6 +11,7 @@
 #include "arg_treatment.h"
 #include "read_file.h"
 #include "search.h"
+#include "run_through_dir.h"
 
 int run_grep_onafile(FILE *file, struct arguments *args);
 
