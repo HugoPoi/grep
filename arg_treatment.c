@@ -183,22 +183,32 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		//option -d run through directory
 		if (strcmp(argv[i], "-d") == 0) {
 			args->opt_d = 1;
-			args->opt_d_action = (strcmp(argv[i + 1],"read")==0)? 1 : (strcmp(argv[i + 1],"recurse")==0)? 2 : (strcmp(argv[i + 1],"skip")==0)? 3 : 4;
+			args->opt_d_action = (strcmp(argv[i + 1], "read") == 0) ? 1 :
+									(strcmp(argv[i + 1], "recurse") == 0) ? 2 :
+									(strcmp(argv[i + 1], "skip") == 0) ? 3 : 4;
 			i++;
-			if(args->opt_d_action == 4){
+			if (args->opt_d_action == 4) {
 				fprintf(stderr,"-d : action non reconnu\n");
 				exit(2);
 			}
 			option_match = 1;
 		}
-		//option --file=
+		//option --directories same as -d
 		if (strncmp(argv[i], "--directories=", 14) == 0) {
 			args->opt_d = 1;
-			args->opt_d_action = (strcmp(&argv[i][14],"read")==0)? 1 : (strcmp(&argv[i][14],"recurse")==0)? 2 : (strcmp(&argv[i][14],"skip")==0)? 3 : 4;
-			if(args->opt_d_action == 4){
+			args->opt_d_action = (strcmp(&argv[i][14], "read") == 0) ? 1 :
+									(strcmp(&argv[i][14], "recurse") == 0) ? 2 :
+									(strcmp(&argv[i][14], "skip") == 0) ? 3 : 4;
+			if (args->opt_d_action == 4) {
 				fprintf(stderr,"-d : action non reconnu\n");
 				exit(2);
 			}
+			option_match = 1;
+		}
+		//option -r option r same as -d recurse
+		if (strcmp(argv[i], "-r") == 0) {
+			args->opt_d = 1;
+			args->opt_d_action = 2;
 			option_match = 1;
 		}
 

@@ -5,6 +5,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../arg_treatment.c \
+../fct_grep.c \
 ../grep.c \
 ../read_file.c \
 ../run_through_dir.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 
 OBJS += \
 ./arg_treatment.o \
+./fct_grep.o \
 ./grep.o \
 ./read_file.o \
 ./run_through_dir.o \
@@ -19,6 +21,7 @@ OBJS += \
 
 C_DEPS += \
 ./arg_treatment.d \
+./fct_grep.d \
 ./grep.d \
 ./read_file.d \
 ./run_through_dir.d \

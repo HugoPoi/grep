@@ -10,9 +10,9 @@
 
 /**
  * Open file with file path given
- * Return File Struct else generate an error
+ * Return 0 when the file opens correctly, 1 for failure
  */
-FILE *open_file(char * file_path);
+int open_file(char * file_path,FILE **pfile);
 
 /**
  * Get the next line in the file

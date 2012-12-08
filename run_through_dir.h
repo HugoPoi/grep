@@ -12,6 +12,6 @@
 
 short isDir(struct dirent *adir);
 short isDirt(char *adir);
-void recurse_dir(const char * dir_name);
+void recurse_dir(const char * dir_name,struct arguments *args);
 
 #endif /* RUN_THROUGH_DIR_H_ */

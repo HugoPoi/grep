@@ -12,16 +12,16 @@
 //def
 #include "read_file.h"
 
-FILE *open_file(char *file_path) {
+int open_file(char * file_path,FILE **pfile) {
 
-	FILE *file = fopen(file_path, "r");
+	*pfile = fopen(file_path, "r");
 
-	if (file == NULL ) {
+	if (*pfile == NULL ) {
 		fprintf(stderr,"Impossible d'ouvrir le fichier\n");
-		exit(EXIT_FAILURE);
+		return 1;
 	}
 
-	return file;
+	return 0;
 }
 
 int get_line_file(FILE * file, char **line, size_t * size) {
@@ -105,7 +105,10 @@ int get_line_file_nd(FILE * file, char **line, size_t * size) {
 
 char *get_all_file(char *file_path) {
 
-	FILE *file = open_file(file_path);
+	FILE *file = NULL;
+	if(open_file(file_path,&file)){
+		exit(EXIT_FAILURE);
+	}
 	size_t size = 50;
 	char c;
 	char *line = calloc(size, sizeof(char));
