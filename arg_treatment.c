@@ -206,7 +206,8 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 			option_match = 1;
 		}
 		//option -r option r same as -d recurse
-		if (strcmp(argv[i], "-r") == 0) {
+		if (strcmp(argv[i], "-r") == 0 || strcmp(argv[i], "-R") == 0
+				|| strcmp(argv[i], "--recursive") == 0) {
 			args->opt_d = 1;
 			args->opt_d_action = 2;
 			option_match = 1;
