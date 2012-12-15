@@ -37,7 +37,6 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 	}
 
 	if (fgets(*line, *size, file) == NULL ) {
-		fclose(file);
 		return 1;
 	} else {
 		//verify all the line is read

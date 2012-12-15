@@ -31,8 +31,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 	int read_error_line;
 	unsigned int match_count = 0, line_count = 0;
 	long byte_offset = 0;
-	char printout_n[100] = "";
-	char printout_b[100] = "";
+	long current_byte_offset = 0;
 	fpos_t current_endline_pos;
 	fpos_t before_line_pos;
 	unsigned int count_B = 0;
@@ -53,20 +52,11 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 			match_count++;
 			if (!(args->opt_B == 1 || args->opt_C == 1 || args->opt_A == 1)) {
 
-				//Simple Print out without context
-				if (args->opt_n) {
-					snprintf(printout_n, 100, "%u:", line_count);
-				}
-				if (args->opt_b) {
-					snprintf(printout_b, 100, "%lu:", byte_offset);
-				}
-				printf("%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
-						(args->opt_H) ? ":" : "", printout_n, printout_b,
-						currentline);
-				//End Simple Print out without context
+				printline(currentline,line_count,byte_offset,args);
 
 			} else {
 				//Print with context
+				current_byte_offset = ftell(file);
 				fsetpos(file, &before_line_pos);
 				line_print_count = 0;
 				read_error_line =
@@ -76,18 +66,13 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 								get_line_file_nd(file, &currentline,
 										&defaultsize);
 				while ((line_print_count
-						<= (args->opt_B_lines + args->opt_A_lines))
+						<= (args->opt_B_lines))
 						&& !read_error_line) {
+
 					line_print_count++;
-					if (args->opt_n) {
-						snprintf(printout_n, 100, "%u:", line_count);
-					}
-					if (args->opt_b) {
-						snprintf(printout_b, 100, "%lu:", byte_offset);
-					}
-					printf("%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
-							(args->opt_H) ? ":" : "", printout_n, printout_b,
-							currentline);
+
+					printline(currentline,line_count,byte_offset,args);
+					if(current_byte_offset==ftell(file)) break;
 					read_error_line =
 							(!args->opt_z) ?
 									get_line_file(file, &currentline,
@@ -106,11 +91,14 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 			byte_offset = ftell(file);
 
 		if (args->opt_B == 1 || args->opt_C == 1) {
+			printf(":%u:\n",count_B);
 			count_B++;
-			if (count_B == args->opt_B_lines) {
+			if (count_B >= (args->opt_B_lines+1)) {
+				//printf("::pos::\n");
 				count_B = 0;
 				fgetpos(file, &before_line_pos);
 			}
+
 		}
 
 		read_error_line =
@@ -119,9 +107,26 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 						get_line_file_nd(file, &currentline, &defaultsize);
 	}
 	//end the main loop
-
+	fclose(file);
 	free(currentline);
 	currentline = NULL;
 
 	return 0;
+}
+
+int printline(char *aline,unsigned int line_count,long byte_offset,struct arguments *args){
+	char printout_n[100] = "";
+	char printout_b[100] = "";
+	//Simple Print out without context
+					if (args->opt_n) {
+						snprintf(printout_n, 100, "%u:", line_count);
+					}
+					if (args->opt_b) {
+						snprintf(printout_b, 100, "%lu:", byte_offset);
+					}
+					printf("%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
+							(args->opt_H) ? ":" : "", printout_n, printout_b,
+							aline);
+					//End Simple Print out without context
+	return 1;
 }
