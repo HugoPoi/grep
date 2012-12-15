@@ -56,7 +56,9 @@ int arg_init(struct arguments *args) {
 	args->opt_Z = 0;
 
 	args->opt_B = 0;
+	args->opt_B_lines = 0;
 	args->opt_A = 0;
+	args->opt_A_lines = 0;
 	args->opt_C = 0;
 	args->opt_U = 0;
 	args->opt_u = 0;
@@ -210,6 +212,73 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 				|| strcmp(argv[i], "--recursive") == 0) {
 			args->opt_d = 1;
 			args->opt_d_action = 2;
+			option_match = 1;
+		}
+
+		//option -B number line before (context)
+		if (strcmp(argv[i], "-B") == 0) {
+			args->opt_B = 1;
+			if (!sscanf(argv[i + 1], "%u", &args->opt_B_lines)) {
+				fprintf(stderr,"erreur -B \n");
+				exit(2);
+			}
+			//printf("%u\n",args->opt_B_lines);
+			i++;
+			option_match = 1;
+		}
+		//option --before-context= number line before (context)
+		if (strncmp(argv[i], "--before-context=", 17) == 0) {
+			args->opt_B = 1;
+			if (!sscanf(&argv[i][17], "%u", &args->opt_B_lines)) {
+				fprintf(stderr,"erreur -B \n");
+				exit(2);
+			}
+			option_match = 1;
+		}
+
+		//option -A number line after (context)
+		if (strcmp(argv[i], "-A") == 0) {
+			args->opt_A = 1;
+			if (!sscanf(argv[i + 1], "%u", &args->opt_A_lines)) {
+				fprintf(stderr,"erreur -A \n");
+				exit(2);
+			}
+			i++;
+			option_match = 1;
+		}
+		//option --after-context number line after (context)
+		if (strncmp(argv[i], "--after-context", 15) == 0) {
+			args->opt_A = 1;
+			if (!sscanf(&argv[i][15], "%u", &args->opt_A_lines)) {
+				fprintf(stderr,"erreur -A \n");
+				exit(2);
+			}
+			option_match = 1;
+		}
+
+		//option -C number line (context)
+		if (strcmp(argv[i], "-C") == 0) {
+			args->opt_C = 1;
+			args->opt_A = 1;
+			args->opt_B = 1;
+			if (!sscanf(argv[i + 1], "%u", &args->opt_A_lines)) {
+				fprintf(stderr,"erreur -C \n");
+				exit(2);
+			}
+			args->opt_B_lines = args->opt_A_lines;
+			i++;
+			option_match = 1;
+		}
+		//option --context number line (context)
+		if (strncmp(argv[i], "--context=", 10) == 0) {
+			args->opt_C = 1;
+			args->opt_A = 1;
+			args->opt_B = 1;
+			if (!sscanf(&argv[i][10], "%u", &args->opt_A_lines)) {
+				fprintf(stderr,"erreur -C \n");
+				exit(2);
+			}
+			args->opt_B_lines = args->opt_A_lines;
 			option_match = 1;
 		}
 

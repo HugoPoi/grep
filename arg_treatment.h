@@ -76,7 +76,9 @@ struct arguments
    short opt_Z;//--null sort l'octet 0 après le nom de fichier
 
    short opt_B;//--before-context=NUM affiche NUM lignes de contexte avant
+   unsigned int opt_B_lines;//number of context line before
    short opt_A;//--after-context=NUM affiche NUM lignes de contexte après
+   unsigned int opt_A_lines;//number of context line after
    short opt_C;//--context=NUM affiche NUM lignes de contexte en sortie
    //-NUM comme --context=NUM
    //--color[=QUAND],met en évidence les concordances;
