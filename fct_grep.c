@@ -11,6 +11,7 @@
 
 #include "read_file.h"
 #include "search.h"
+#include "fifo_context.h"
 
 #include "fct_grep.h"
 
@@ -33,11 +34,12 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 	long byte_offset = 0;
 	long current_byte_offset = 0;
 	fpos_t current_endline_pos;
-	fpos_t before_line_pos;
-	unsigned int count_B = 0;
+	Fifo_linecontext *before_line_pos = NULL;
+	//fpos_t before_line_pos;
+	//unsigned int count_B = 0;
 	unsigned int line_print_count = 0;
 
-	fgetpos(file, &before_line_pos); //save the pos before for context
+	fifo_savenextline(&before_line_pos,file,args->opt_B_lines); //save the pos before for context
 	if (args->opt_b)
 		byte_offset = ftell(file);
 	read_error_line =
@@ -57,7 +59,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 			} else {
 				//Print with context
 				current_byte_offset = ftell(file);
-				fsetpos(file, &before_line_pos);
+				fsetpos(file, before_line_pos->data);
 				line_print_count = 0;
 				read_error_line =
 						(!args->opt_z) ?
@@ -91,14 +93,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 			byte_offset = ftell(file);
 
 		if (args->opt_B == 1 || args->opt_C == 1) {
-			printf(":%u:\n",count_B);
-			count_B++;
-			if (count_B >= (args->opt_B_lines+1)) {
-				//printf("::pos::\n");
-				count_B = 0;
-				fgetpos(file, &before_line_pos);
-			}
-
+			fifo_savenextline(&before_line_pos,file,args->opt_B_lines);
 		}
 
 		read_error_line =
@@ -107,6 +102,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 						get_line_file_nd(file, &currentline, &defaultsize);
 	}
 	//end the main loop
+	fifo_clear(&before_line_pos);
 	fclose(file);
 	free(currentline);
 	currentline = NULL;
