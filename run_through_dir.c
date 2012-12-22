@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include <errno.h>
 
 #ifndef WIN32
 #include <sys/types.h> //if build on unix sys use types.h for telldir
