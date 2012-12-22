@@ -8,6 +8,7 @@ C_SRCS += \
 ../fct_grep.c \
 ../fifo_context.c \
 ../grep.c \
+../help.c \
 ../read_file.c \
 ../run_through_dir.c \
 ../search.c 
@@ -17,6 +18,7 @@ OBJS += \
 ./fct_grep.o \
 ./fifo_context.o \
 ./grep.o \
+./help.o \
 ./read_file.o \
 ./run_through_dir.o \
 ./search.o 
@@ -26,6 +28,7 @@ C_DEPS += \
 ./fct_grep.d \
 ./fifo_context.d \
 ./grep.d \
+./help.d \
 ./read_file.d \
 ./run_through_dir.d \
 ./search.d 

@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "read_file.h"
-
+#include "help.h"
 //def
 #include "arg_treatment.h"
 
@@ -82,7 +82,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 		//option --help
 		if (strcmp(argv[i], "--help") == 0) {
 			args->opt_help = 1;
-			fprintf(stdout,"help of grep\n");
+			print_help();
 			option_match = 1;
 			exit(2);
 		}
@@ -300,7 +300,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 
 	//if only 1 args and it's not -V or help -> exit
 	if (*argc < 3) {
-		fprintf(stderr,"help of grep\n");
+		print_help();
 		exit(2);
 	}
 

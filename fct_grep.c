@@ -147,7 +147,7 @@ int printline(char *aline, unsigned int line_count, long byte_offset,
 	if (args->opt_b) {
 		snprintf(printout_b, 100, "%lu:", byte_offset);
 	}
-	printf("%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
+	fprintf(stdout,"%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
 			(args->opt_H) ? ":" : "", printout_n, printout_b, aline);
 	//End Simple Print out without context
 	return 1;
