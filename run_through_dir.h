@@ -9,6 +9,7 @@
 #define RUN_THROUGH_DIR_H_
 
 #include <dirent.h>
+#include "arg_treatment.h"
 
 short isDir(struct dirent *adir);
 short isDirt(char *adir);
