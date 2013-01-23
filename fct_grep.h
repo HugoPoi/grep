@@ -11,6 +11,6 @@
 #include "arg_treatment.h"
 
 int run_grep_onafile(char *afilepath, struct arguments *args);
-int printline(char *aline,unsigned int line_count,long byte_offset,struct arguments *args);
+int printline(char *aline,unsigned int line_count,long byte_offset,struct arguments *args, char *filepath);
 
 #endif /* FCT_GREP_H_ */

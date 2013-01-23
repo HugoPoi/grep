@@ -54,7 +54,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 			match_count++;
 			if (!(args->opt_B == 1 || args->opt_C == 1 || args->opt_A == 1)) {
 
-				printline(currentline, line_count, byte_offset, args);
+				printline(currentline, line_count, byte_offset, args, afilepath);
 
 			} else {
 				//Print with context
@@ -73,7 +73,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 
 					line_print_count++;
 
-					printline(currentline, line_count, byte_offset, args);
+					printline(currentline, line_count, byte_offset, args, afilepath);
 					if (current_byte_offset == ftell(file))
 						break;
 					read_error_line =
@@ -84,7 +84,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 											&defaultsize);
 				}
 				}
-				if(args->opt_A == 1) printline(currentline, line_count, byte_offset, args);
+				if(args->opt_A == 1 && args->opt_C == 0) printline(currentline, line_count, byte_offset, args, afilepath);
 				if(args->opt_C == 1 || args->opt_A == 1){
 				line_print_count = 0;
 				read_error_line =
@@ -98,7 +98,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 
 					line_print_count++;
 
-					printline(currentline, line_count, byte_offset, args);
+					printline(currentline, line_count, byte_offset, args, afilepath);
 
 					read_error_line =
 							(!args->opt_z) ?
@@ -137,7 +137,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 }
 
 int printline(char *aline, unsigned int line_count, long byte_offset,
-		struct arguments *args) {
+		struct arguments *args,char *filepath) {
 	char printout_n[100] = "";
 	char printout_b[100] = "";
 	//Simple Print out without context
@@ -147,7 +147,7 @@ int printline(char *aline, unsigned int line_count, long byte_offset,
 	if (args->opt_b) {
 		snprintf(printout_b, 100, "%lu:", byte_offset);
 	}
-	fprintf(stdout,"%s%s%s%s%s\n", (args->opt_H) ? args->file_path : "",
+	fprintf(stdout,"%s%s%s%s%s\n", (args->opt_H) ? filepath : "",
 			(args->opt_H) ? ":" : "", printout_n, printout_b, aline);
 	//End Simple Print out without context
 	return 1;

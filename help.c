@@ -29,11 +29,9 @@ Output control:\n\
   -m, --max-count=NUM       stop after NUM matches\n\
   -b, --byte-offset         print the byte offset with output lines\n\
   -n, --line-number         print line number with output lines\n\
-      --line-buffered       flush output on every line\n\
   -H, --with-filename       print the filename for each match\n\
   -h, --no-filename         suppress the prefixing filename on output\n\
       --label=LABEL         print LABEL as filename for standard input\n\
-  -o, --only-matching       show only the part of a line matching PATTERN\n\
   -q, --quiet, --silent     suppress all normal output\n\
       --binary-files=TYPE   assume that binary files are TYPE\n\
                             TYPE is 'binary', 'text', or 'without-match'\n\
