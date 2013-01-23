@@ -282,6 +282,14 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 			option_match = 1;
 		}
 
+
+		//option -H print the filename
+				if (strcmp(argv[i], "--count") == 0
+						|| strcmp(argv[i], "-c") == 0) {
+					args->opt_c = 1;
+					option_match = 1;
+				}
+
 		//if you want add a option insert the code here (before this line :-)
 
 		//if doesn't match any option, the first will be pattern and the second the file

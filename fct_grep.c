@@ -127,6 +127,10 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 						get_line_file(file, &currentline, &defaultsize) :
 						get_line_file_nd(file, &currentline, &defaultsize);
 	}
+
+	//option count
+	if(args->opt_c && match_count>0) printcount(afilepath,match_count);
+
 	//end the main loop
 	fifo_clear(&before_line_pos);
 	fclose(file);
@@ -138,6 +142,7 @@ int run_grep_onafile(char *afilepath, struct arguments *args) {
 
 int printline(char *aline, unsigned int line_count, long byte_offset,
 		struct arguments *args,char *filepath) {
+	if(args->opt_c) return 1;
 	char printout_n[100] = "";
 	char printout_b[100] = "";
 	//Simple Print out without context
@@ -151,4 +156,9 @@ int printline(char *aline, unsigned int line_count, long byte_offset,
 			(args->opt_H) ? ":" : "", printout_n, printout_b, aline);
 	//End Simple Print out without context
 	return 1;
+}
+
+int printcount(char *filepath, unsigned int match_count){
+	fprintf(stdout,"%s:%u\n",filepath,match_count);
+return 1;
 }

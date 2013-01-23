@@ -38,6 +38,7 @@ Output control:\n\
   -d, --directories=ACTION  how to handle directories\n\
                             ACTION is 'read', 'recurse', or 'skip'\n\
   -R, -r, --recursive       equivalent to --directories=recurse\n\
+  -c, --count               print only a count of matching lines per FILE\n\
  Context control:\n\
   -B, --before-context=NUM  print NUM lines of leading context\n\
   -A, --after-context=NUM   print NUM lines of trailing context\n\
