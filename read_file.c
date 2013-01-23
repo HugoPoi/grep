@@ -58,6 +58,10 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 					if (currentsize > maxsize - 1) {
 						maxsize = maxsize * 2;
 						*line = realloc(*line, maxsize * sizeof(char));
+						if (*line == NULL ) {
+								fprintf(stderr,"Impossible de creer cette merde en RAM\n");
+								exit(EXIT_FAILURE);
+						}
 					}
 					*(*line + currentsize - 2) = c;
 				}
@@ -82,7 +86,7 @@ int get_line_file_nd(FILE * file, char **line, size_t * size) {
 	}
 
 	if (*line == NULL ) {
-		fprintf(stderr,"Impossible de créer cette merde en RAM\n");
+		fprintf(stderr,"Impossible de creer cette merde en RAM\n");
 		exit(EXIT_FAILURE);
 	}
 	char c;
