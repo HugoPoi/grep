@@ -14,7 +14,7 @@
 
 int open_file(char * file_path,FILE **pfile) {
 
-	*pfile = fopen(file_path, "r");
+	*pfile = fopen(file_path, "rb");
 
 	if (*pfile == NULL ) {
 		fprintf(stderr,"Impossible d'ouvrir le fichier\n");
@@ -56,10 +56,13 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 					currentsize++;
 					/* if overflow realloc x2 the buffer line*/
 					if (currentsize > maxsize - 1) {
-						maxsize = maxsize * 2;
-						*line = realloc(*line, maxsize * sizeof(char));
+						maxsize = maxsize +100;
+						*line = (char *) realloc(*line, maxsize * sizeof(char));
 						if (*line == NULL ) {
+							int dodo;
 								fprintf(stderr,"Impossible de creer cette merde en RAM\n");
+								scanf("%d",&dodo);
+								dodo = 2 ;
 								exit(EXIT_FAILURE);
 						}
 					}
