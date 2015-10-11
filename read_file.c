@@ -32,7 +32,7 @@ int get_line_file(FILE * file, char **line, size_t * size) {
 	}
 
 	if (*line == NULL ) {
-		fprintf(stderr,"Impossible de créer cette merde en RAM\n");
+		fprintf(stderr,"Impossible de crÃ©er cette merde en RAM\n");
 		exit(EXIT_FAILURE);
 	}
 

@@ -1,7 +1,7 @@
 /*
  * fct_grep.h
  *
- *  Created on: 8 déc. 2012
+ *  Created on: 8 dec. 2012
  *      Author: Hugo
  */
 

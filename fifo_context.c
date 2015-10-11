@@ -1,7 +1,7 @@
 /*
  * fifo_context.c
  *
- *  Created on: 16 déc. 2012
+ *  Created on: 16 dec. 2012
  *      Author: Hugo
  */
 
@@ -42,21 +42,21 @@ void fifo_savenextline(Fifo_linecontext **p_file, FILE * file,unsigned int max_s
     }
 }
 
-int fifo_deletefirst(Fifo_linecontext **p_file)
+Fifo_linecontext* fifo_deletefirst(Fifo_linecontext **p_file)
 {
     /* On teste si la file n'est pas vide. */
     if (*p_file != NULL)
     {
-        /* Création d'un élément temporaire pointant vers le deuxième élément de la file. */
+        /* Creation d'un element temporaire pointant vers le deuxieme element de la file. */
     	Fifo_linecontext *p_tmp = (*p_file)->next;
         /* Free the data */
         free((*p_file)->data),(*p_file)->data = NULL;
-        /* Effacement du premier élément. */
+        /* Effacement du premier element. */
         free(*p_file), *p_file = NULL;
-        /* On fait pointer la file vers le deuxième élément. */
+        /* On fait pointer la file vers le deuxieme element. */
         *p_file = p_tmp;
     }
-    return (int)*p_file;
+    return *p_file;
 }
 
 void fifo_clear(Fifo_linecontext **p_file)
@@ -64,7 +64,7 @@ void fifo_clear(Fifo_linecontext **p_file)
     /* Tant que la file n'est pas vide. */
     while (*p_file != NULL)
     {
-        /* On enlève l'élément courant. */
+        /* On enleve l'element courant. */
     	fifo_deletefirst(p_file);
     }
 }

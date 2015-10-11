@@ -1,7 +1,7 @@
 /*
  * fifo_context.h
  *
- *  Created on: 16 déc. 2012
+ *  Created on: 16 dec. 2012
  *      Author: Hugo
  */
 
@@ -16,7 +16,7 @@ typedef struct fifo_linecontext
 
 void fifo_savenextline(Fifo_linecontext **p_file, FILE * file,unsigned int max_size);
 
-int fifo_deletefirst(Fifo_linecontext **p_file);
+Fifo_linecontext* fifo_deletefirst(Fifo_linecontext **p_file);
 
 void fifo_clear(Fifo_linecontext **p_file);
 

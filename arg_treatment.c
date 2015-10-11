@@ -18,7 +18,7 @@
 int arg_init(struct arguments *args) {
 
 	args->pattern = NULL;
-	args->file_path = NULL;
+	args->file_paths = NULL;
 
 	args->opt_E = 0;
 	args->opt_F = 0;
@@ -70,7 +70,7 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 	//treatment of argv check number
 	//return std error status
 
-	int i;
+	int i, filesc = 0;
 
 	short option_match;
 
@@ -298,9 +298,12 @@ int arg_treatment(int *argc, char **argv, struct arguments *args) {
 			strcpy(args->pattern, argv[i]);
 			option_match = 1;
 		}
-		if (option_match == 0&& args->pattern!=NULL && args->file_path==NULL) {
-			args->file_path = calloc(strlen(argv[i]) + 1, sizeof(char));
-			strcpy(args->file_path, argv[i]);
+		if (option_match == 0 && args->pattern != NULL) {
+      if(args->file_paths == NULL){
+        args->file_paths = calloc( *argc - i , sizeof(char*));
+        args->file_pathsc = *argc - i;
+      }
+			args->file_paths[filesc++] = argv[i];
 			option_match = 1;
 		}
 
@@ -320,8 +323,8 @@ void arguments_delete(struct arguments *args) {
 		free(args->pattern);
 		args->pattern = NULL;
 	}
-	if (args->file_path != NULL ) {
-		free(args->file_path);
-		args->file_path = NULL;
-	}
+  if (args->file_paths != NULL ) {
+    free(args->file_paths);
+    args->file_paths = NULL;
+  }
 }

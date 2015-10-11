@@ -27,11 +27,16 @@ int main(int argc, char **argv) {
 		str_to_lower(args.pattern);
 	}
 
-	if (args.opt_d_action == 2) {
-		recurse_dir(args.file_path,&args);
-	} else {
-		run_grep_onafile(args.file_path, &args);
-	}
+  int i;
+  for(i = 0 ; i < args.file_pathsc ; i++){
+
+    if (args.opt_d_action == 2) {
+      recurse_dir(args.file_paths[i],&args);
+    } else {
+      run_grep_onafile(args.file_paths[i], &args);
+    }
+
+  }
 
 	arguments_delete(&args);
 

@@ -1,7 +1,7 @@
 /*
  * help.c
  *
- *  Created on: 22 déc. 2012
+ *  Created on: 22 dec. 2012
  *      Author: Hugo
  */
 
